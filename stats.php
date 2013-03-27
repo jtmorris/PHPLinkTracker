@@ -9,13 +9,14 @@ include_once ("header.php");
 	</hgroup>
 </header>
 <table>
+	<tr><th colspan='3'>Statistics By Context</th></tr>
 	<tr>
 		<th>Context Data</th>
 		<th># Views</th>
 		<th>Last View Date</th>
 	</tr>
 	<?php
-	$arr = getLinkData();
+	$arr = getLinkData("context");
 
 	$vals = array();
 	$count = 1;
@@ -51,10 +52,35 @@ include_once ("header.php");
 	?>
 </table>
 
+<table>
+	<tr><th colspan='4'>Last Views (max of 500)</th></tr>
+	<tr>
+		<th>Date</th>
+		<th>Directing To</th>
+		<th>Context</th>
+		<th>User Agent</th>
+	</tr>
+	
+	<?php
+	$arr = getLinkData('date', 500);
+	foreach ($arr as $x) {
+		$t = new DateTime($x['time']);
+		?>
+			<tr>
+				<td><?php echo $t->format('F j, Y @ g:i A'); ?></td>
+				<td><?php echo $x['goto']; ?></td>
+				<td><?php echo $x['context']; ?></td>
+				<td><?php echo $x['useragent']; ?></td>
+			</tr>
+		<?php
+	}
+	?>
+</table>
+
 <?php
 include_once("footer.php");
 
-function getLinkData() {
+function getLinkData($sortby = 'date', $limitnum = 0) {
 	/*****
 		Purpose:
 			To execute a SELECT query on the link data table and return 
@@ -67,7 +93,23 @@ function getLinkData() {
 		Sample Usage:
 			getLinkData()
 	*****/
-	$query = "SELECT * FROM plt_linkinfo ORDER BY context ASC, time DESC";
+
+	if ($sortby === "context") {
+		$orderby = "ORDER BY context ASC, time DESC";		
+	}
+	else {
+		$orderby = "ORDER BY time DESC";
+	}
+
+	if ($limitnum > 0) {
+		$limit = "LIMIT " . $limitnum;
+	}
+	else {
+		$limit="";
+	}
+
+
+	$query = "SELECT * FROM plt_linkinfo " . $orderby . " " . $limit;
 
 	$db = new Db();
 	$res = $db->runquery($query);
