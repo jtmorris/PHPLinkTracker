@@ -57,7 +57,10 @@ First, you will need a URL pointing to this script on your web server.  I will u
 below.
 
 <b>Lengthy Explanation</b>
+<<<<<<< HEAD
 
+=======
+>>>>>>> de8111741503179639279bed4c483248bcd70c71
 Once you have your URL, to make this script work, simply place a URL parameter named "goto" at the end of your URL with the value of the 
 URL you wish to forward to.  So, if I wanted to create a link to my GitHub profile using this script, and the example URL above, the link
 I would provide to others would be "http://go.jtmorris.net?goto=http://github.com/jtmorris".  Visiting that link should add an entry in
@@ -69,7 +72,10 @@ what this link is by adding another URL parameter, called "context".  If I were 
 string added to the database.
 
 <b>Short Examples</b>
+<<<<<<< HEAD
 
+=======
+>>>>>>> de8111741503179639279bed4c483248bcd70c71
 http://go.jtmorris.net?goto=http://www.mywebsite.com
 - OR -
 http://go.jtmorris.net?goto=http://www.myotherwebsite.com&context=my_identification_string
