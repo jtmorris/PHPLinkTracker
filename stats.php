@@ -1,5 +1,6 @@
 <?php
 include_once ("config.php");
+include_once ("header.php");
 ?>
 
 <h1>Statistics</h1>
@@ -47,6 +48,7 @@ include_once ("config.php");
 </table>
 
 <?php
+include_once("footer.php");
 
 function getLinkData() {
 	/*****
