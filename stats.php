@@ -3,7 +3,11 @@ include_once ("config.php");
 include_once ("header.php");
 ?>
 
-<h1>Statistics</h1>
+<header>
+	<hgroup>
+		<h1>Passthrough Link Statistics</h1>
+	</hgroup>
+</header>
 <table>
 	<tr>
 		<th>Context Data</th>

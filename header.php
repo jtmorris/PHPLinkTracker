@@ -6,10 +6,5 @@
 		<link href="style.css" type='text/css' rel="stylesheet" />
 	</head>
 	<body>
-		<div id="site_wrapper">
-			<header>
-				<hgroup>
-					<h1>Passthrough Link Statistics</h1>
-				</hgroup>
-			</header>
+		<div id="site_wrapper">			
 			<div class='site_content'>
