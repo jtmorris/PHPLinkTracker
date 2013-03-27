@@ -2,7 +2,7 @@
 include_once ("config.php");
 ?>
 
-<h1>Stats</h1>
+<h1>Statistics</h1>
 <table>
 	<tr>
 		<th>Context Data</th>
@@ -23,8 +23,10 @@ include_once ("config.php");
 				$vals[$lastIndex]['count'] = $count;
 			}
 
+			$t = new DateTime($x['time']);
+
 			$vals[$lastIndex + 1]['context'] = $x['context'];
-			$vals[$lastIndex + 1]['lastdate'] = $x['time'];
+			$vals[$lastIndex + 1]['lastdate'] = $t->format('F j, Y @ g:i A');
 			$count = 1;
 		}
 		else {
