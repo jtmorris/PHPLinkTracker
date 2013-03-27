@@ -71,7 +71,9 @@ string added to the database.
 <b>Short Examples</b>
 
 http://go.jtmorris.net?goto=http://www.mywebsite.com
+
 - OR -
+
 http://go.jtmorris.net?goto=http://www.myotherwebsite.com&context=my_identification_string
 
 
