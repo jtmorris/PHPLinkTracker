@@ -41,13 +41,22 @@ include_once ("header.php");
 	}
 	$vals[count($vals) - 1]['count'] = $count;
 	foreach($vals as $x) {
-		?>
-		<tr>
-			<td><?php echo $x['context']; ?></td>
-			<td><?php echo $x['count']; ?></td>
-			<td><?php echo $x['lastdate']; ?></td>
-		</tr>
-		<?php
+		if (!isset($x['context']) || !isset($x['lastdate'])) {
+			?>
+				<tr>
+					<td colspan='3'>Nothing to show yet!</td>
+				</tr>
+			<?php
+		}
+		else {
+			?>
+			<tr>
+				<td><?php echo $x['context']; ?></td>
+				<td><?php echo $x['count']; ?></td>
+				<td><?php echo $x['lastdate']; ?></td>
+			</tr>
+			<?php
+		}
 	}
 	?>
 </table>
@@ -72,6 +81,13 @@ include_once ("header.php");
 				<td><?php echo $x['context']; ?></td>
 				<td><?php echo $x['useragent']; ?></td>
 			</tr>
+		<?php
+	}
+	if (count($arr) < 1) {
+		?>
+		<tr>
+			<td colspan='4'>Nothing to show yet!</td>
+		</tr>
 		<?php
 	}
 	?>
