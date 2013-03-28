@@ -132,7 +132,7 @@ function getVisitorData($id) {
 	return [];
 }
 
-function getLinkData($sortby = 'date', $limitnum = 0) {
+function getLinkData($sortby = 'date', $limitnum = 0, $context = "") {
 	/*****
 		Purpose:
 			To execute a SELECT query on the link data table and return 
@@ -160,8 +160,15 @@ function getLinkData($sortby = 'date', $limitnum = 0) {
 		$limit="";
 	}
 
+	if (!empty($context)) {
+		$where = "WHERE " . $context;
+	}
+	else {
+		$where = "";
+	}
 
-	$query = "SELECT * FROM plt_linkinfo " . $orderby . " " . $limit;
+
+	$query = "SELECT * FROM plt_linkinfo " . $where . " " . $orderby . " " . $limit;
 
 	$db = new Db();
 	$res = $db->runquery($query);
