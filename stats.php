@@ -62,23 +62,32 @@ include_once ("header.php");
 </table>
 
 <table>
-	<tr><th colspan='4'>Last Views (max of 500)</th></tr>
+	<tr><th colspan='5'>Last Views (max of 500)</th></tr>
 	<tr>
 		<th>Date</th>
 		<th>Directing To</th>
 		<th>Context</th>
+		<th>Visitor IP</th>
 		<th>User Agent</th>
 	</tr>
 	
 	<?php
-	$arr = getLinkData('date', 500);
-	foreach ($arr as $x) {
+	$darr = getLinkData('date', 500);
+	foreach ($darr as $x) {
 		$t = new DateTime($x['time']);
+		$varr = getVisitorData($x['visitor']);
+		if (count($varr) > 0) {
+			$ip = $varr['ip'];
+		}
+		else {
+			$ip = "unavailable";
+		}
 		?>
 			<tr>
 				<td><?php echo $t->format('F j, Y @ g:i A'); ?></td>
 				<td><?php echo $x['goto']; ?></td>
 				<td><?php echo $x['context']; ?></td>
+				<td><a target='_blank' href='http://whatismyipaddress.com/ip/<?php echo $ip; ?>'><?php echo $ip; ?></a></td>
 				<td><?php echo $x['useragent']; ?></td>
 			</tr>
 		<?php
@@ -86,7 +95,7 @@ include_once ("header.php");
 	if (count($arr) < 1) {
 		?>
 		<tr>
-			<td colspan='4'>Nothing to show yet!</td>
+			<td colspan='5'>Nothing to show yet!</td>
 		</tr>
 		<?php
 	}
@@ -95,6 +104,33 @@ include_once ("header.php");
 
 <?php
 include_once("footer.php");
+
+
+function getVisitorData($id) {
+	/*****
+		Purpose:
+			To execute a SELECT query on the visitor data table and return 
+			the info on the visitor with the specified ID.
+		Parameters:
+			$id:  Value of the id column of the visitor table.
+		Returns:
+			Associative array containing the desired row if the ID was found.
+			Empty array otherwise.
+		Sample Usage:
+			getVisitorData()
+	*****/
+
+	$query = "SELECT * FROM plt_visitorinfo WHERE id=$id";
+
+	$db = new Db();
+	$res = $db->runquery($query);
+
+	if ($res) {
+		return $res->fetch_assoc();
+	}
+
+	return [];
+}
 
 function getLinkData($sortby = 'date', $limitnum = 0) {
 	/*****
