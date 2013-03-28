@@ -9,13 +9,14 @@ include_once ("header.php");
 	</hgroup>
 </header>
 <table>
+	<tr><th colspan='3'>Statistics By Context</th></tr>
 	<tr>
 		<th>Context Data</th>
 		<th># Views</th>
 		<th>Last View Date</th>
 	</tr>
 	<?php
-	$arr = getLinkData();
+	$arr = getLinkData("context");
 
 	$vals = array();
 	$count = 1;
@@ -40,11 +41,52 @@ include_once ("header.php");
 	}
 	$vals[count($vals) - 1]['count'] = $count;
 	foreach($vals as $x) {
+		if (!isset($x['context']) || !isset($x['lastdate'])) {
+			?>
+				<tr>
+					<td colspan='3'>Nothing to show yet!</td>
+				</tr>
+			<?php
+		}
+		else {
+			?>
+			<tr>
+				<td><?php echo $x['context']; ?></td>
+				<td><?php echo $x['count']; ?></td>
+				<td><?php echo $x['lastdate']; ?></td>
+			</tr>
+			<?php
+		}
+	}
+	?>
+</table>
+
+<table>
+	<tr><th colspan='4'>Last Views (max of 500)</th></tr>
+	<tr>
+		<th>Date</th>
+		<th>Directing To</th>
+		<th>Context</th>
+		<th>User Agent</th>
+	</tr>
+	
+	<?php
+	$arr = getLinkData('date', 500);
+	foreach ($arr as $x) {
+		$t = new DateTime($x['time']);
+		?>
+			<tr>
+				<td><?php echo $t->format('F j, Y @ g:i A'); ?></td>
+				<td><?php echo $x['goto']; ?></td>
+				<td><?php echo $x['context']; ?></td>
+				<td><?php echo $x['useragent']; ?></td>
+			</tr>
+		<?php
+	}
+	if (count($arr) < 1) {
 		?>
 		<tr>
-			<td><?php echo $x['context']; ?></td>
-			<td><?php echo $x['count']; ?></td>
-			<td><?php echo $x['lastdate']; ?></td>
+			<td colspan='4'>Nothing to show yet!</td>
 		</tr>
 		<?php
 	}
@@ -54,10 +96,10 @@ include_once ("header.php");
 <?php
 include_once("footer.php");
 
-function getUserData($id = false) {
+function getLinkData($sortby = 'date', $limitnum = 0) {
 	/*****
 		Purpose:
-			To execute a SELECT query on the visitor data table and return 
+			To execute a SELECT query on the link data table and return 
 			the results as an array.
 		Parameters:
 			none
@@ -67,39 +109,23 @@ function getUserData($id = false) {
 		Sample Usage:
 			getLinkData()
 	*****/
-	if (!$id) {
-		$query = "SELECT * FROM plt_visitorinfo";
+
+	if ($sortby === "context") {
+		$orderby = "ORDER BY context ASC, time DESC";		
 	}
 	else {
-		$query = "SELECT * FROM plt_visitorinfo WHERE id=$id";
+		$orderby = "ORDER BY time DESC";
 	}
 
-	$db = new Db();
-	$res = $db->runquery($query);
-
-	$arr = resultToArray($res);
-
-	if (count($arr) == 1) {
-		return $arr[0];
+	if ($limitnum > 0) {
+		$limit = "LIMIT " . $limitnum;
+	}
+	else {
+		$limit="";
 	}
 
-	return $arr;
-}
 
-function getLinkData() {
-	/*****
-		Purpose:
-			To execute a SELECT all query on the link data table and return 
-			the results as an array.
-		Parameters:
-			none
-		Returns:
-			Numeric array of associative arrays with key = column name 
-			and value = to column value.
-		Sample Usage:
-			getLinkData()
-	*****/
-	$query = "SELECT * FROM plt_linkinfo ORDER BY context ASC, time DESC";
+	$query = "SELECT * FROM plt_linkinfo " . $orderby . " " . $limit;
 
 	$db = new Db();
 	$res = $db->runquery($query);

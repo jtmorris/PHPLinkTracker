@@ -15,7 +15,16 @@ $gt = isset($_GET['goto']) ? $_GET['goto'] : "";
 if ($gt !== "") {
 	header("Location: " . $gt);
 } else {
-	echo "No redirection URL provided.";
+	include_once ("header.php");
+
+	?>
+	<h1>Link Passthrough Script</h1>
+	<p>
+		No destination link was provided!
+	</p>
+	<?php
+
+	include_once("footer.php");
 }
 
 
