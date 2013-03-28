@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Passthrough Link Statistics</title>
+		<title>Passthrough Link Tracker</title>
 
 		<link href="style.css" type='text/css' rel="stylesheet" />
 	</head>
