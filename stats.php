@@ -54,10 +54,42 @@ include_once ("header.php");
 <?php
 include_once("footer.php");
 
+function getUserData($id = false) {
+	/*****
+		Purpose:
+			To execute a SELECT query on the visitor data table and return 
+			the results as an array.
+		Parameters:
+			none
+		Returns:
+			Numeric array of associative arrays with key = column name 
+			and value = to column value.
+		Sample Usage:
+			getLinkData()
+	*****/
+	if (!$id) {
+		$query = "SELECT * FROM plt_visitorinfo";
+	}
+	else {
+		$query = "SELECT * FROM plt_visitorinfo WHERE id=$id";
+	}
+
+	$db = new Db();
+	$res = $db->runquery($query);
+
+	$arr = resultToArray($res);
+
+	if (count($arr) == 1) {
+		return $arr[0];
+	}
+
+	return $arr;
+}
+
 function getLinkData() {
 	/*****
 		Purpose:
-			To execute a SELECT query on the link data table and return 
+			To execute a SELECT all query on the link data table and return 
 			the results as an array.
 		Parameters:
 			none

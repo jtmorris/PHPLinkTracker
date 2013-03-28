@@ -1,0 +1,4 @@
+Options +FollowSymlinks
+RewriteEngine on
+
+Redirect 404 /config.php
