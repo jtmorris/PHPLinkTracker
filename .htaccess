@@ -1,4 +1,4 @@
-Options +FollowSymlinks
-RewriteEngine on
-
-Redirect 404 /config.php
+<Files "config.php">
+	Order allow,deny
+	Deny from all
+</Files>
