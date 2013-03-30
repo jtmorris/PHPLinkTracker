@@ -21,7 +21,7 @@ if ($gt !== "") {
 	<h1>Link Passthrough Script</h1>
 	<p>
 		Welcome. This page does nothing fancy until you start adding some URL parameters.
-		Visit <a href='http://php-plt.jtmorris.net'>http://php-plt.jtmorris.net'</a> for 
+		Visit <a href='http://php-plt.jtmorris.net'>http://php-plt.jtmorris.net</a> for 
 		usage instructions.
 	</p>
 	<?php
