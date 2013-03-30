@@ -1,17 +1,16 @@
 <?php
-include_once ("config.php");
+@include_once ("config.php");
 include_once ("header.php");
+
+$sstring = "<span style='color: rgb(0,104,0) '>&#10003;</span> ";	//	green check mark
+$fstring = "<span style='color: rgb(104,0,0) '>&#10007;</span> ";	//	red X mark
+$pstring = "<span style='color: #888; '>&#10037;</span> ";	//	grey star
 ?>
 
 <ol>
 	<li>
 		<?php
-		$sstring = "<span style='color: rgb(0,104,0) '>&#10003;</span> ";	//	green check mark
-		$fstring = "<span style='color: rgb(104,0,0) '>&#10007;</span> ";	//	red X mark
-		$pstring = "<span style='color: #888; '>&#10037;</span> ";	//	grey star
-
-		//	Check DB connection
-		if (checkDbConn()) {
+		if (checkForConfigFile()) {
 			$cont = true;
 			echo $sstring;
 		}
@@ -20,15 +19,54 @@ include_once ("header.php");
 			echo $fstring;
 		}
 		?>
-		Check Database Connection		
+		
+		Check Configuration File
+		
+		<?php
+		if (!$cont) {
+			echo "<br />&nbsp;&nbsp;&nbsp;- <i>Configuration file missing! Please read the installation instructions.</i>";
+		}
+		?>
 	</li>
 	<li>
 		<?php
 		//	If previous step was successful, try this one
 		if ($cont) {
+			//	Check DB connection
+			if (checkDbConn()) {
+				$cont = true;
+				$e = false;
+				echo $sstring;
+			}
+			else {
+				$cont = false;
+				$e = true;
+				echo $fstring;				
+			}
+		}
+		//	Output the pending string
+		else {
+			echo $pstring;
+			$e = false;
+		}
+		?>
+
+		Test Database Connection	
+
+		<?php
+		if ($e) {
+			echo "<br />&nbsp;&nbsp;&nbsp;- <i>Check your database configuration settings for errors!</i>";
+		}
+		?>
+	</li>
+	<li>
+		<?php
+		//	If previous step was successful, try this one
+		$msg = true;
+		if ($cont) {
 			//	Create database tables
 			$cont = false;
-			if ($msg = createDbTables() === true) {
+			if (($msg = createDbTables()) === true) {
 				$cont = true;
 				echo $sstring;
 			}
@@ -49,24 +87,35 @@ include_once ("header.php");
 		<?php
 		//	If something went wrong, output the message
 		if ($msg !== true) {
-			echo "<br /><i>" . $msg . "</i>";
-		}
-		?>
-	</li>
-	<li>
-		<?php
-		if ($cont) {
-			echo "<b>Installation Complete!</b>";
-		}
-		else {
-			echo "<b>Installation Failed!</b>";
+			echo "<br />&nbsp;&nbsp;&nbsp;- <i>" . $msg . "</i>";
 		}
 		?>
 	</li>
 </ol>
-
 <?php
+if ($cont) {
+	echo "<b>Installation Complete! <a href='./index.php'>Click here to continue</a>.</b>";
+}
+else {
+	echo "<b>Installation Failed!  Please fix errors described above, and <a href='./install.php'>try again</a>.</b>";
+}
+
+
+
 include_once("footer.php");
+
+function checkForConfigFile() {
+	/*****
+		Purpose:
+			Check to see that the configuration file is present.
+		Parameters:
+			none
+		Returns:
+			Boolean true on success.  Boolean false on failure.		
+	*****/
+
+	return file_exists('./config.php');
+}
 
 function checkDbConn() {
 	/*****
@@ -76,8 +125,6 @@ function checkDbConn() {
 			none
 		Returns:
 			Boolean true on success.  Boolean false on failure.
-		Sample Usage:
-			createDbConn()
 	*****/
 
 	$db = new Db();
@@ -114,6 +161,7 @@ function createDbTables() {
 		`useragent` varchar(1000) NOT NULL,
 		`referer` varchar(1000) NOT NULL,
 		`goto` varchar(1000) DEFAULT NULL,
+		`context` varchar(1000) DEFAULT NULL,
 		PRIMARY KEY (`id`)
 	)";
 	
@@ -131,7 +179,7 @@ function createDbTables() {
 	$db = new Db();
 	foreach ($queries as $x) {
 		if (!$db->runquery($x)) {
-			return $db->error;
+			return $db->conn->error;
 		}		
 	}
 	
