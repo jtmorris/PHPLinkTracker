@@ -15,16 +15,14 @@ Technical Requirements
 
 Installation
 ==============
-1.)  Download all the files in this repository to your local computer
-2.)  Copy or rename the file "config_sample.php" to "config.php"
-3.)  Open the "config.php" file in any text editor.
-4.)  Fill in the database connection info under the "Datase Connection Settings" heading.
-5.)  Upload the files to your web server ("config_sample.php", "README.md", "LICENSE", ".gitattributes", ".gitignore", and ".git/" are not required).
-6.)  Navigate to the "/install.php" page in your web browser (e.g. "http://example.com/install.php").
-7.)  If installation completes succesfully, you are ready to begin using this.
-     If installation fails, check your configuration settings, and follow any onscreen instructions.
-
-***  If this doesn't work, feel free to ask for help, or report any bugs at http://php-plt.jtmorris.net.
+1.  Download all the files in this repository to your local computer
+2.  Copy or rename the file "config_sample.php" to "config.php"
+3.  Open the "config.php" file in any text editor
+4.  Fill in the database connection info under the "Datase Connection Settings" heading
+5.  Upload the files to your web server ("config_sample.php", "README.md", "LICENSE", ".gitattributes", ".gitignore", and ".git/" are not required)
+6.  Navigate to the "/install.php" page in your web browser (e.g. "http://example.com/install.php")
+7.  If installation completes succesfully, you are ready to begin using this
+     If installation fails, check your configuration settings, and follow any onscreen instructions
 
 Usage
 =======
