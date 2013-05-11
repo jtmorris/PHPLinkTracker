@@ -66,9 +66,9 @@ include_once ("header.php");
 	<tr>
 		<th>Date</th>
 		<th>Directing To</th>
+		<th>Referred From</th>
 		<th>Context</th>
 		<th>Visitor IP</th>
-		<th>User Agent</th>
 	</tr>
 	
 	<?php
@@ -86,9 +86,9 @@ include_once ("header.php");
 			<tr>
 				<td><?php echo $t->format('F j, Y @ g:i A'); ?></td>
 				<td><?php echo $x['goto']; ?></td>
+				<td><?php echo $x['referer']; ?></td>
 				<td><?php echo $x['context']; ?></td>
 				<td><a target='_blank' href='http://whatismyipaddress.com/ip/<?php echo $ip; ?>'><?php echo $ip; ?></a></td>
-				<td><?php echo $x['useragent']; ?></td>
 			</tr>
 		<?php
 	}
