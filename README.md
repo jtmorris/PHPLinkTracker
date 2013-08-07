@@ -1,10 +1,10 @@
 Purpose
 ==========
-The PHP Link Tracker project is used to provide a statistics collection tool
-for given out links.  Essentially, if a proper link (see usage instructions) 
-is used, and a person visits that link, this PHP script will log that information 
-to a database. I designed it to track QR Code effectiveness on printed
-materials.  However, it is not limited to that purpose.
+My PHP Link Tracker project is a statistics collection tool
+for links.  Essentially, if a proper link (see usage instructions)
+is distributed to a person, when that person visits the link is logged, and
+the person is redirected to the desired location. It was originally intended to
+track QR Code effectiveness on printed materials.  However, it is not limited to that purpose.
 
 
 Technical Requirements
@@ -26,28 +26,26 @@ Installation
 
 Usage
 =======
-***  You will need a URL pointing to this script's install location. For examples below, the URL http://go.example.com/ will be 
-a placeholder for that URL.  Substitute in yours when using.
+*You will need a URL pointing to this script's install location. For examples below, the URL http://go.example.com/ will be
+a placeholder for that URL.  Substitute in yours when using.*
 
 Creating a Basic Tracked Link
 ------------------------------
 There are multiple options that can be set in a link.  However, the bare minimum is the destination website address.
-This is provided in the "goto" url parameter.  So, for example, if you wish to give a link to your Facebook page which
-collects usage statistics, install this script, and give the following link. 
+This is provided in the "goto" url parameter.  So, for example, if you wish to give a link to your Facebook page while collecting
+usage statistics, install this script, and give the following link.
 
 ```
 http://go.example.com/?goto=http://www.facebook.com/mypage
 ```
 
-When followed, this will silently log any visits to the database, and then send the user to the "goto" URL.
+When followed, this will silently log any visits to the database, and then redirect the user to the "goto" URL.
 
 
 Creating a Tracked Link with Contextual Information
 ----------------------------------------------------
 The basic tracked link is all well and good.  Particularly if you are only tracking one particular link.
-However, it would be nice to provide a little contextual information which would allow for multiple tracked
-links while still making it easy to decipher who is visiting which link.  For this, we need some contextual
-information added to the tracked link.
+However, if used for tracking multiple links, it is generally helpful to provide some basic contextual information.
 
 So, let's say we wanted to create the same link as above, but provide a contextual description of "Example Link
 to Facebook Page".  We can then construct the following link.
@@ -90,7 +88,7 @@ http://go.example.com/stats.php.
 Questions, Bugs, Feature Requests, Patches, et cetera
 ===========================================
 Feel free to use GitHub's excellent tools for communication and collaboration.  Or, visit http://php-plt.jtmorris.net,
-and post on the forums.  I will gladly help out as my schedule permits, and welcome help or feedback.
+and leave a comment.  I will gladly help out as my schedule permits, and welcome help or feedback.
 
 
 Licensing
